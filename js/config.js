@@ -34,5 +34,5 @@ window.SITE_CONFIG = {
 
   // Visit counter (GoatCounter: free, no cookies). Put the account code here, e.g. 'sucreetsale'.
   // It counts page visits and, once per visit, the customers who press an order button.
-  analytics: { goatcounter: '' }
+  analytics: { goatcounter: 'sucreetsale' }
 };
