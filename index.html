@@ -144,7 +144,7 @@
           </h1>
           <p class="hero__lead" data-i18n="hero.lead">Crêpes salées généreuses, crêpes sucrées gourmandes, Tasty Crousty au poulet crispy, grillades et pâtisseries maison. Sur place, à emporter ou livré chez vous.</p>
           <div class="hero__cta">
-            <a href="#menu" class="btn btn--primary btn--lg" data-i18n="cta.order">Commander en ligne</a>
+            <a href="#menu" class="btn btn--primary btn--lg js-order" data-i18n="cta.order">Commander en ligne</a>
             <a href="#" class="btn btn--uber btn--lg js-uber" target="_blank" rel="noopener">
               <span data-i18n="cta.uber">Livraison Uber Eats</span>
             </a>
@@ -377,7 +377,7 @@
   <!-- Mobile action bar -->
   <nav class="mbar" aria-label="Actions rapides">
     <a href="#" class="js-phone"><span aria-hidden="true">📞</span><span data-i18n="mbar.call">Appeler</span></a>
-    <a href="#menu" class="mbar__main"><span aria-hidden="true">🥞</span><span data-i18n="mbar.order">Commander</span></a>
+    <a href="#menu" class="mbar__main js-order"><span aria-hidden="true">🥞</span><span data-i18n="mbar.order">Commander</span></a>
     <a href="#" class="js-uber" target="_blank" rel="noopener"><span aria-hidden="true">🛵</span><span>Uber Eats</span></a>
   </nav>
 
@@ -449,6 +449,20 @@
   </aside>
 
   <!-- Confirmation / lightbox -->
+  <!-- Shown instead of the basket while online ordering is not activated (paymentMode: 'soon') -->
+  <dialog class="modal" id="soonModal" aria-labelledby="soonTitle">
+    <form method="dialog" class="modal__box modal__box--center">
+      <button class="modal__x" value="cancel" aria-label="Fermer">×</button>
+      <div class="soon-ico" aria-hidden="true">🥞</div>
+      <h3 id="soonTitle" data-i18n="soon.t">La commande en ligne arrive bientôt !</h3>
+      <p class="muted" data-i18n="soon.p">En attendant, commandez par téléphone ou sur Uber Eats. Merci de votre patience 😊</p>
+      <div class="soon-actions">
+        <a class="btn btn--primary btn--block js-phone" href="#" data-track="soon-appel"><span data-i18n="soon.call">Appeler</span>&nbsp;<span class="js-phone-text">09 63 25 77 47</span></a>
+        <a class="btn btn--uber btn--block js-uber" href="#" target="_blank" rel="noopener" data-track="soon-uber-eats"><span data-i18n="soon.uber">Commander sur Uber Eats</span></a>
+      </div>
+    </form>
+  </dialog>
+
   <dialog class="modal" id="confirmModal" aria-labelledby="cfTitle">
     <form method="dialog" class="modal__box modal__box--center">
       <div class="check" aria-hidden="true">✓</div>

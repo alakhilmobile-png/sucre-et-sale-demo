@@ -20,14 +20,19 @@ window.SITE_CONFIG = {
   // Banner at the top of the page. Set enabled:false to hide it.
   promo: {
     enabled: true,
-    fr: 'Nouveau à Juvisy ! Commandez en ligne et récupérez votre commande sans attendre.',
-    en: 'New in Juvisy! Order online and pick up your food without waiting.'
+    fr: 'Commande en ligne bientôt disponible ! En attendant, commandez par téléphone ou sur Uber Eats.',
+    en: 'Online ordering coming soon! Meanwhile, order by phone or on Uber Eats.'
   },
 
   // Online payment.
+  //  'soon'   → menu only: order buttons show "coming soon, call us or use Uber Eats" (no basket).
   //  'demo'   → the whole order flow works but no money is taken (for presentations).
   //  'stripe' → real card / Apple Pay / Google Pay payments via Stripe Checkout
   //             (needs the small server in /api deployed, see README).
-  paymentMode: 'demo',
-  checkoutEndpoint: '/api/create-checkout-session'
+  paymentMode: 'soon',
+  checkoutEndpoint: '/api/create-checkout-session',
+
+  // Visit counter (GoatCounter: free, no cookies). Put the account code here, e.g. 'sucreetsale'.
+  // It counts page visits and, once per visit, the customers who press an order button.
+  analytics: { goatcounter: '' }
 };

@@ -21,6 +21,30 @@
   };
   const money = (n) => new Intl.NumberFormat(lang === 'fr' ? 'fr-FR' : 'en-GB', { style: 'currency', currency: 'EUR' }).format(n);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  // Online ordering not activated yet: order buttons explain how to order instead
+  const SOON = CFG.paymentMode === 'soon';
+
+  /* ---------- Visit counter (GoatCounter, no cookies) ---------- */
+  const GC = CFG.analytics && CFG.analytics.goatcounter;
+  const pendingEvents = [];
+  function sendEvent(name) {
+    if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
+    else pendingEvents.push(name);
+  }
+  if (GC) {
+    const s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://gc.zgo.at/count.js';
+    s.dataset.goatcounter = `https://${GC}.goatcounter.com/count`;
+    s.onload = () => pendingEvents.splice(0).forEach(sendEvent);
+    document.head.appendChild(s);
+  }
+  // Count an event at most once per visit
+  function track(name) {
+    if (!GC) return;
+    try { if (sessionStorage.getItem('ss_ev_' + name)) return; sessionStorage.setItem('ss_ev_' + name, '1'); } catch { /* private mode */ }
+    sendEvent(name);
+  }
 
   /* ---------- Config-driven content ---------- */
   function applyConfig() {
@@ -32,7 +56,26 @@
     $('#reviewCount').textContent = CFG.googleReviews;
     $('#year').textContent = new Date().getFullYear();
     $('#demoNote').hidden = CFG.paymentMode !== 'demo';
+    if (SOON) {
+      $('#cartOpen').style.display = 'none';
+      $('.pay-badges').style.display = 'none';
+      Object.entries(I18N.soonFr).forEach(([key, fr]) => {
+        $$(`[data-i18n="${key}"]`).forEach((el) => { el.dataset.i18n = key + '.soon'; el.innerHTML = fr; });
+      });
+    }
   }
+
+  const soonModal = $('#soonModal');
+  function showSoon() {
+    track('commande-en-ligne');
+    soonModal.showModal();
+  }
+  soonModal.addEventListener('click', (e) => {
+    const a = e.target.closest('[data-track]');
+    if (a) track(a.dataset.track);
+    if (e.target === soonModal) soonModal.close();
+  });
+  if (SOON) $$('.js-order').forEach((a) => a.addEventListener('click', (e) => { e.preventDefault(); showSoon(); }));
 
   /* ---------- Language ---------- */
   const frOriginals = new Map();
@@ -160,6 +203,7 @@
   $('#menuPanels').addEventListener('click', (e) => {
     const b = e.target.closest('[data-add]');
     if (!b) return;
+    if (SOON) { showSoon(); return; }
     const it = MENU.byId[b.dataset.add];
     if (it.drink || it.menuPrice) { modalSource = b; openItemModal(it); }
     else addLine({ id: it.id, qty: 1, opts: {} }, b);
@@ -274,6 +318,7 @@
   const keyOf = (l) => l.id + '|' + JSON.stringify(l.opts || {});
   function saveCart() { store.set('ss_cart', cart); }
   function addLine(line, sourceEl) {
+    if (SOON) { showSoon(); return; }
     const k = keyOf(line);
     const ex = cart.find((l) => keyOf(l) === k);
     if (ex) ex.qty = Math.min(20, ex.qty + line.qty);
@@ -343,6 +388,7 @@
   const drawer = $('#drawer');
   const overlay = $('#overlay');
   function openCart() {
+    if (SOON) { showSoon(); return; }
     drawer.classList.add('open'); drawer.setAttribute('aria-hidden', 'false');
     overlay.hidden = false; document.body.classList.add('lock');
     $('#cartClose').focus();

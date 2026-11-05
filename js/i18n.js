@@ -34,7 +34,20 @@ window.I18N = {
     'cart.title': 'Your order', 'cart.empty': 'Your basket is empty.', 'cart.browse': 'See the menu', 'cart.total': 'Total incl. VAT',
     'cart.secure': '100% secure payment · Card, Apple Pay, Google Pay', 'cart.demo': 'Demo mode: no real payment will be taken.',
     'co.title': 'Pick up at the counter', 'co.takeaway': 'Take away', 'co.dinein': 'Eat in', 'co.name': 'First & last name', 'co.phone': 'Phone',
-    'co.time': 'Pick-up time', 'co.notes': 'Note (allergies, no onions…)'
+    'co.time': 'Pick-up time', 'co.notes': 'Note (allergies, no onions…)',
+    'soon.t': 'Online ordering is coming soon!', 'soon.p': 'In the meantime, order by phone or on Uber Eats. Thank you for your patience 😊',
+    'soon.call': 'Call', 'soon.uber': 'Order on Uber Eats',
+    'hl.3.p.soon': 'Order by phone or on Uber Eats, and pick up with no wait. Online ordering is coming very soon.',
+    'menu.lead.soon': 'Online ordering is coming soon. In the meantime, call us or order on Uber Eats.',
+    'about.l3.soon': 'Orders by phone & Uber Eats', 'foot.secure.soon': 'Online ordering coming soon'
+  },
+
+  // French text used instead of the page text while online ordering is "coming soon"
+  soonFr: {
+    'hl.3.p': 'Commandez par téléphone ou sur Uber Eats, et récupérez sans attendre. La commande en ligne arrive très bientôt.',
+    'menu.lead': 'La commande en ligne arrive bientôt. En attendant, appelez-nous ou commandez sur Uber Eats.',
+    'about.l3': 'Commande par téléphone & Uber Eats',
+    'foot.secure': 'Commande en ligne bientôt disponible'
   },
 
   // Strings generated in JavaScript

@@ -580,3 +580,10 @@ p { margin: 0 0 1em; }
   .float-chip { font-size: .78rem; }
   .marquee { margin: -10px 0 40px; }
 }
+
+/* "Online ordering coming soon" dialog */
+.soon-ico { width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center; margin: 0 auto 14px; font-size: 32px; background: #fff1e0; box-shadow: 0 0 0 8px rgba(240, 122, 26, .12); }
+.soon-actions { display: grid; gap: 10px; margin-top: 18px; }
+
+/* The tilted marquee is a few pixels wider than the screen: clip it without breaking the sticky header */
+html { overflow-x: clip; }
